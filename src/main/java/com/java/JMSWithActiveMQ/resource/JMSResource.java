@@ -16,7 +16,11 @@ public class JMSResource {
 	
 	@RequestMapping("/{message}")
 	public String publish(@PathVariable("message") final String message){
-		producer.publish(message);
+		producer.publishQueue(message);
+		
+		for (int i = 0; i < 5; i++){
+			producer.publishTopic(message + " :: " + i);
+        }
 		return "Published Successfully...!!!";
 	}
 }
